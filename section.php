@@ -83,12 +83,17 @@ class PLProPricing extends PageLinesSection {
 				array(
 					'key'	=> 'link_text',
 					'label'	=> __( 'Link Text', 'pagelines' ),
-					'type'	=> 'text'
+					'type'	=> 'text_small'
 				),
 				array(
 					'key'	=> 'btn_theme',
 					'label'	=> __( 'Button Theme', 'pagelines' ),
 					'type'	=> 'select_button'
+				),
+				array(
+					'key'	=> 'popular',
+					'label'	=> __( 'Select as Most Popular?', 'pagelines' ),
+					'type'	=> 'check'
 				),
 				array(
 					'key'	=> 'attributes',
@@ -144,22 +149,33 @@ class PLProPricing extends PageLinesSection {
 			$link_text 	= pl_array_get( 'link_text', $item);
 			$btn_theme 	= pl_array_get( 'btn_theme', $item, 'btn-important');
 			$attr 		= pl_array_get( 'attributes', $item);
+			
+			$popular 	= pl_array_get( 'popular', $item);
 		
+			$popular_class = ($popular) ? 'most-popular' : '';
+			
+			$title_bg = ($popular) ? 'pl-link-inverse' : 'pl-link';
+			
+			$title = ($popular) ? sprintf('%s<div class="mp"><i class="icon-star"></i> %s</div>', $title, __('Most Popular!', 'pagelines')) : $title;
 		
 			$attr_list = ''; 
 			
 			if($attr != ''){
 				
 				$attr_array = explode("\n", $attr);
-				
+				$count = 0;
 				foreach($attr_array as $at){
+					
+					$class = ( $count % 2 == 0 ) ? 'pl-contrast' : '';
 					
 					if(strpos($at, '*') === 0){
 						$at = str_replace('*', '', $at); 
-						$attr_list .= sprintf('<li class="emphasis">%s</li>', $at); 
+						$attr_list .= sprintf('<li class="pl-border emphasis %s">%s</li>', $class, $at); 
 					} else {
-						$attr_list .= sprintf('<li>%s</li>', $at); 
+						$attr_list .= sprintf('<li class="pl-border 	%s">%s</li>', $class, $at); 
 					}
+					
+					$count++;
 					
 				}
 				
@@ -170,7 +186,7 @@ class PLProPricing extends PageLinesSection {
 				$link_text = ($link_text != '') ? $link_text : 'Sign Up';
 				$link_text = sprintf('<span class="btn-link-text" data-sync="propricing_link_text_%s">%s</span>', $count, $link_text);
 				
-				$formatted_link = sprintf('<li class="pp-link"><a href="%s" class="btn btn-large %s" >%s <i class="icon-chevron-sign-right"></i></a></li>', $link, $btn_theme, $link_text);
+				$formatted_link = sprintf('<li class="pp-link pl-border"><a href="%s" class="btn btn-large %s" >%s <i class="icon-chevron-sign-right"></i></a></li>', $link, $btn_theme, $link_text);
 				
 			} else {
 				$formatted_link = ''; 
@@ -188,9 +204,9 @@ class PLProPricing extends PageLinesSection {
 				$output .= '<div class="row fix">';
 
 			$output .= sprintf(
-				'<div class="span%1$s pp-plan pl-animation pl-appear fix">
+				'<div class="span%1$s %9$s pp-plan pl-animation pl-appear pl-border fix">
 					<div class="pp-header">
-						<div class="pp-title" data-sync="propricing_title_%8$s">
+						<div class="pp-title %10$s pl-standard-title pl-border" data-sync="propricing_title_%8$s">
 							%2$s
 						</div>
 						<div class="pp-price">
@@ -202,6 +218,7 @@ class PLProPricing extends PageLinesSection {
 					</div>
 					%7$s
 				</div>',
+				
 				$cols,
 				$title,
 				$price_pre, 
@@ -209,7 +226,9 @@ class PLProPricing extends PageLinesSection {
 				$price_post,
 				$formatted_sub,
 				$formatted_attr, 
-				$count
+				$count,
+				$popular_class,
+				$title_bg
 			);
 
 			$width += $cols;
