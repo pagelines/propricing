@@ -204,7 +204,7 @@ class PLProPricing extends PageLinesSection {
 				$output .= '<div class="row fix">';
 
 			$output .= sprintf(
-				'<div class="span%1$s %9$s pp-plan pl-animation pl-appear pl-border fix">
+				'<div class="span%1$s %9$s pp-plan pl-animation pl-appear pl-base pl-border fix">
 					<div class="pp-header">
 						<div class="pp-title %10$s pl-standard-title pl-border" data-sync="propricing_title_%8$s">
 							%2$s
