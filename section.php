@@ -163,10 +163,15 @@ class PLProPricing extends PageLinesSection {
 			if($attr != ''){
 				
 				$attr_array = explode("\n", $attr);
-				$count = 0;
+				$attr_count = 0;
 				foreach($attr_array as $at){
 					
-					$class = ( $count % 2 == 0 ) ? 'pl-contrast' : '';
+					$at = trim($at);
+					
+					if( $at == '' )
+						continue;
+					
+					$class = ( $attr_count % 2 == 0 ) ? 'pl-contrast' : '';
 					
 					if(strpos($at, '*') === 0){
 						$at = str_replace('*', '', $at); 
@@ -175,7 +180,7 @@ class PLProPricing extends PageLinesSection {
 						$attr_list .= sprintf('<li class="pl-border 	%s">%s</li>', $class, $at); 
 					}
 					
-					$count++;
+					$attr_count++;
 					
 				}
 				
@@ -200,9 +205,9 @@ class PLProPricing extends PageLinesSection {
 		
 			$formatted_sub = ($sub != '') ? sprintf('<div class="price-sub" data-sync="propricing_sub_%s">%s</div>', $count, $sub) : ''; 
 		
-			if($width == 0)
-				$output .= '<div class="row fix">';
-
+			$output .= pl_grid_tool('row_start', $cols, $count, $num);
+			//$output .= $cols.' '.$count.' '.$num;
+			
 			$output .= sprintf(
 				'<div class="span%1$s %9$s pp-plan pl-animation pl-appear pl-base pl-border fix">
 					<div class="pp-header">
@@ -231,13 +236,9 @@ class PLProPricing extends PageLinesSection {
 				$title_bg
 			);
 
-			$width += $cols;
 
-			if($width >= 12 || $count == $num){
-				$width = 0;
-				$output .= '</div>';
-			}
-
+			$output .= pl_grid_tool('row_end', $cols, $count, $num);
+			
 			$count++;
 		 }
 	
