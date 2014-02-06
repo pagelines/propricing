@@ -156,7 +156,7 @@ class PLProPricing extends PageLinesSection {
 			
 			$title_bg = ($popular) ? 'pl-link-inverse' : 'pl-link';
 			
-			$title = ($popular) ? sprintf('%s<div class="mp"><i class="icon-star"></i> %s</div>', $title, __('Most Popular!', 'pagelines')) : $title;
+			$title = ($popular) ? sprintf('%s<div class="mp"><i class="icon icon-star"></i> %s</div>', $title, __('Most Popular!', 'pagelines')) : $title;
 		
 			$attr_list = ''; 
 			
@@ -191,7 +191,7 @@ class PLProPricing extends PageLinesSection {
 				$link_text = ($link_text != '') ? $link_text : 'Sign Up';
 				$link_text = sprintf('<span class="btn-link-text" data-sync="propricing_link_text_%s">%s</span>', $count, $link_text);
 				
-				$formatted_link = sprintf('<li class="pp-link pl-border"><a href="%s" class="btn btn-large %s" >%s <i class="icon-chevron-sign-right"></i></a></li>', $link, $btn_theme, $link_text);
+				$formatted_link = sprintf('<li class="pp-link pl-border"><a href="%s" class="btn btn-large %s" >%s <i class="icon icon-chevron-sign-right"></i></a></li>', $link, $btn_theme, $link_text);
 				
 			} else {
 				$formatted_link = ''; 
